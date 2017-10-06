@@ -8,7 +8,8 @@ describe('Pawn', () => {
     let board;
     beforeEach(() => { // Common code executed before each test.
         board = new Board();
-    });
+    })
+
     it("Test 1: White Pawn (not at start)", () => {
         const pawn = new Pawn(Player.WHITE);
         const square = Square.at(3, 4)
@@ -39,11 +40,8 @@ describe('white pawns', () => {
         board.setPiece(Square.at(0, 0), pawn);
 
         const moves = pawn.getAvailableMoves(board);
-
-        moves.should.deep.include(Square.at(1, 0));
     });
-
-});
+})
 
 describe('black pawns', () => {
     let board;
@@ -60,3 +58,59 @@ describe('black pawns', () => {
     });
 
 })
+
+describe('white pawns', () => {
+
+    let board;
+    beforeEach(() => board = new Board());
+
+    it('can only move one square up if they have already moved', () => {
+        const pawn = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(1, 0), pawn);
+        pawn.moveTo(board, Square.at(2, 0));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.have.length(1);
+        moves.should.deep.include(Square.at(3, 0));
+    });
+
+    it('can move one or two squares up on their first move', () => {
+        const pawn = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(1, 7), pawn);
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.have.length(2);
+        moves.should.deep.include.members([Square.at(2, 7), Square.at(3, 7)]);
+    });
+
+});
+
+describe('black pawns', () => {
+
+    let board;
+    beforeEach(() => board = new Board(Player.BLACK));
+
+    it('can only move one square down if they have already moved', () => {
+        const pawn = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(6, 0), pawn);
+        pawn.moveTo(board, Square.at(5, 0));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.have.length(1);
+        moves.should.deep.include(Square.at(4, 0));
+    });
+
+    it('can move one or two squares down on their first move', () => {
+        const pawn = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(6, 7), pawn);
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.have.length(2);
+        moves.should.deep.include.members([Square.at(4, 7), Square.at(5, 7)]);
+    });
+
+});
