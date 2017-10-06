@@ -25,11 +25,11 @@ export default class Square {
             return false
         }
     }
-    isThereATakeablePiece(board,player) {
+    isThereATakeablePieceOrEmptySpace(board) {
         if (this.isThereAnEmptySpace(board)) {
             return true
         }
-        else if (board.getPiece(this).player == player) {
+        else if ((board.getPiece(this).player !== board.currentPlayer) && (board.getPiece(this).isCapturable === true )) {
             return true
         }
         else {

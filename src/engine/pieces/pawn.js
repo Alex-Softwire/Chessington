@@ -23,8 +23,29 @@ export default class Pawn extends Piece {
         else {
             AvailableMoves = new Array(new Square(current_row+1*whiteBlackMultiplier,current_col));
         }
-        return AvailableMoves.filter(square => square.isOffBoard(board))
+        const upleftsquare = new Square(current_row+1*whiteBlackMultiplier,current_col+1)
+        const uprightsquare = new Square(current_row+1*whiteBlackMultiplier,current_col-1)
+        AvailableMoves = AvailableMoves.filter(square => square.isOffBoard(board))
             .filter(square => this.isThereAPieceInTheWay(board,square,current_row,current_col))
-            .filter(square => square.isThereATakeablePiece(board,this.player))
+            .filter(square => square.isThereAnEmptySpace(board,this.player))
+        if (upleftsquare.isOffBoard(board))
+        {
+            if (!upleftsquare.isThereAnEmptySpace(board)) {
+                if (upleftsquare.isThereATakeablePieceOrEmptySpace(board,this.player)) {
+                    AvailableMoves.push(upleftsquare)
+                }
+            }
+
+        }
+        if (uprightsquare.isOffBoard(board)) {
+            if (!uprightsquare.isThereAnEmptySpace(board)) {
+                if (uprightsquare.isThereATakeablePieceOrEmptySpace(board,this.player)) {
+                    AvailableMoves.push(uprightsquare)
+                }
+            }
+        }
+
+        return AvailableMoves
     }
+
 }

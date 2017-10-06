@@ -3,6 +3,7 @@ export default class Piece {
     constructor(player) {
         this.player = player;
         this.hasMoved = false
+        this.isCapturable = true
     }
 
     isThereAPieceInTheWay(board,square,current_row,current_column) {

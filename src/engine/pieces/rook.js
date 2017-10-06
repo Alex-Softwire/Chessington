@@ -18,5 +18,6 @@ export default class Rook extends Piece {
             }
         }
         return availableMoves.filter(square => this.isThereAPieceInTheWay(board,square,currentRow,currentCol))
+            .filter((square => square.isThereATakeablePieceOrEmptySpace(board,this.player)))
     }
 }

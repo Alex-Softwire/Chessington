@@ -4,6 +4,7 @@ import Square from "../square";
 export default class King extends Piece {
     constructor(player,type) {
         super(player);
+        this.isCapturable = false
     }
 
     getAvailableMoves(board) {
@@ -19,6 +20,6 @@ export default class King extends Piece {
                 }
             }
         }
-        return Available_Moves
+        return Available_Moves.filter((square => square.isThereATakeablePieceOrEmptySpace(board,this.player)))
     }
 }

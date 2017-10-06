@@ -19,7 +19,7 @@ export default class Bishop extends Piece {
             }
         }
         return Available_Moves.filter(square => this.isThereAPieceInTheWay(board,square,current_row,current_col))
-            .filter(square => square.isThereATakeablePiece(board,this.player))
+            .filter(square => square.isThereATakeablePieceOrEmptySpace(board,this.player))
     }
 }
 
