@@ -25,7 +25,7 @@ export default class Pawn extends Piece {
                     new Square(current_row-2,current_col));
             }
             else {
-                return new Array(new Square(current_row+1,current_col));
+                return new Array(new Square(current_row-1,current_col));
             }
         }
 
