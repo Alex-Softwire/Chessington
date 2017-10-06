@@ -21,5 +21,6 @@ export default class Queen extends Piece {
             }
         }
         return Available_Moves.filter(square => this.isThereAPieceInTheWay(board,square,current_row,current_col))
+            .filter(square => square.isThereATakeablePiece(board,this.player))
     }
 }

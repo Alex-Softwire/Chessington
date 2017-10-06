@@ -19,6 +19,6 @@ export default class Knight extends Piece {
                 }
             }
         }
-        return Available_Moves.filter(square => square.isThereAPiece(board))
+        return Available_Moves.filter(square => square.isThereATakeablePiece(board,this.player))
     }
 }

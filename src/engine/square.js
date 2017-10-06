@@ -17,12 +17,32 @@ export default class Square {
         return `Row ${this.row}, Col ${this.col}`;
     }
 
-    isThereAPiece(board) {
+    isThereAnEmptySpace(board) {
         if (board.getPiece(this) === undefined) {
             return true
         }
         else {
             return false
+        }
+    }
+    isThereATakeablePiece(board,player) {
+        if (this.isThereAnEmptySpace(board)) {
+            return true
+        }
+        else if (board.getPiece(this).player == player) {
+            return true
+        }
+        else {
+            return false
+        }
+
+    }
+    isOffBoard(board) {
+        if ((this.col >= board.board.length) || (this.row >= board.board.length) || (this.col < 0) || (this.row < 0)) {
+            return false
+        }
+        else {
+            return true
         }
     }
 

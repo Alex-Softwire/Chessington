@@ -15,9 +15,8 @@ export default class Piece {
         }
         if (y_shift !== 0) {
             y_mult = Math.floor(y_shift/Math.abs(y_shift)) }
-        for (let i = 1;i<=Math.max(Math.abs(x_shift),Math.abs(y_shift));i++) {
-            if (!(new Square(current_row+i*x_mult,current_column+i*y_mult).isThereAPiece(board))) {
-                console.log(`This shouldn't happen ${current_row+i*x_mult} ${current_row+i*y_mult}`)
+        for (let i = 1;i<Math.max(Math.abs(x_shift),Math.abs(y_shift));i++) {
+            if (!(new Square(current_row+i*x_mult,current_column+i*y_mult).isThereAnEmptySpace(board))) {
                 return false
             }
         }

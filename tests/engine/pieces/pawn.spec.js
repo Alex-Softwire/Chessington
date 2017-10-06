@@ -46,8 +46,18 @@ describe('white pawns', () => {
 
         const moves = pawn.getAvailableMoves(board);
 
+
         moves.should.have.length(1);
         moves.should.deep.include(Square.at(3, 0));
+        it('cannot move at the top of the board', () => {
+            const pawn = new Pawn(Player.WHITE);
+            board.setPiece(Square.at(7, 3), pawn);
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.be.empty;
+        });
+
     });
 
     it('can move one or two squares up on their first move', () => {
@@ -66,6 +76,7 @@ describe('black pawns', () => {
 
     let board;
     beforeEach(() => board = new Board(Player.BLACK));
+
 
     it('can only move one square down if they have already moved', () => {
         const pawn = new Pawn(Player.BLACK);
@@ -86,6 +97,14 @@ describe('black pawns', () => {
 
         moves.should.have.length(2);
         moves.should.deep.include.members([Square.at(4, 7), Square.at(5, 7)]);
+    })
+    it('cannot move at the bottom of the board', () => {
+            const pawn = new Pawn(Player.BLACK);
+            board.setPiece(Square.at(0, 3), pawn);
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.be.empty;
     });
 
     it('cannot move if there is a piece in front', () => {

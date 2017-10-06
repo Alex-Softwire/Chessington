@@ -23,7 +23,8 @@ export default class Pawn extends Piece {
         else {
             AvailableMoves = new Array(new Square(current_row+1*whiteBlackMultiplier,current_col));
         }
-        return AvailableMoves.filter(square => this.isThereAPieceInTheWay(board,square,current_row,current_col))
-
+        return AvailableMoves.filter(square => square.isOffBoard(board))
+            .filter(square => this.isThereAPieceInTheWay(board,square,current_row,current_col))
+            .filter(square => square.isThereATakeablePiece(board,this.player))
     }
 }
