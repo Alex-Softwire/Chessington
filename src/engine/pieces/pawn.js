@@ -10,24 +10,20 @@ export default class Pawn extends Piece {
     getAvailableMoves(board) {
         let current_row = board.findPiece(this).row
         let current_col = board.findPiece(this).col
-        if (this.player === Player.WHITE) {
-            if (board.findPiece(this).row === 1) {
-                return [new Square(current_row+1,current_col),
-                new Square(current_row+2,current_col)];
-            }
-            else {
-                return new Array(new Square(current_row+1,current_col));
-            }
+        let whiteBlackMultiplier = +1
+        let AvailableMoves = []
+        if (this.player === Player.BLACK) {
+            whiteBlackMultiplier = -1
         }
-        else if (this.player === Player.BLACK) {
-            if (board.findPiece(this).row === 6) {
-                return [new Square(current_row-1,current_col),
-                    new Square(current_row-2,current_col)];
+
+        if (this.hasMoved === false) {
+            AvailableMoves = [new Square(current_row+1*whiteBlackMultiplier,current_col),
+                new Square(current_row+2*whiteBlackMultiplier,current_col)];
             }
-            else {
-                return new Array(new Square(current_row-1,current_col));
-            }
+        else {
+            AvailableMoves = new Array(new Square(current_row+1*whiteBlackMultiplier,current_col));
         }
+        return AvailableMoves.filter(square => this.isThereAPieceInTheWay(board,square,current_row,current_col))
 
     }
 }

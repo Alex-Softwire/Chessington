@@ -1,3 +1,4 @@
+import {Board} from "./board.js"
 export default class Square {
     constructor(row, col) {
         this.row = row;
@@ -15,4 +16,14 @@ export default class Square {
     toString() {
         return `Row ${this.row}, Col ${this.col}`;
     }
+
+    isThereAPiece(board) {
+        if (board.getPiece(this) === undefined) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
 }

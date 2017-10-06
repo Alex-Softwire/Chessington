@@ -24,6 +24,8 @@ export default class Board {
         return this.board[square.row][square.col];
     }
 
+
+
     findPiece(pieceToFind) {
         for (let row = 0; row < this.board.length; row++) {
             for (let col = 0; col < this.board[row].length; col++) {
@@ -36,7 +38,8 @@ export default class Board {
     }
 
     movePiece(fromSquare, toSquare) {
-        const movingPiece = this.getPiece(fromSquare);        
+        const movingPiece = this.getPiece(fromSquare);
+        movingPiece.hasMoved = true
         if (!!movingPiece && movingPiece.player === this.currentPlayer) {
             this.setPiece(toSquare, movingPiece);
             this.setPiece(fromSquare, undefined);

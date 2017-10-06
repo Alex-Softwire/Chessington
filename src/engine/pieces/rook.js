@@ -9,7 +9,7 @@ export default class Rook extends Piece {
         let currentRow = board.findPiece(this).row
         let currentCol = board.findPiece(this).col
         let availableMoves = []
-        for (let i = 0;i<8;i++) {
+        for (let i = 0;i<board.board.length;i++) {
             if (i !== currentCol) {
                 availableMoves.push(new Square(currentRow,i))
             }
@@ -17,6 +17,6 @@ export default class Rook extends Piece {
                 availableMoves.push(new Square(i,currentCol))
             }
         }
-        return availableMoves
+        return availableMoves.filter(square => this.isThereAPieceInTheWay(board,square,currentRow,currentCol))
     }
 }

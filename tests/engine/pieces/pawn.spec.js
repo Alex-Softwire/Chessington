@@ -1,36 +1,10 @@
 
+import 'chai/register-should';
+import Rook from '../../../src/engine/pieces/rook';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Pawn from '../../../src/engine/pieces/pawn'
-
-describe('Pawn', () => {
-    let board;
-    beforeEach(() => { // Common code executed before each test.
-        board = new Board();
-    })
-
-    it("Test 1: White Pawn (not at start)", () => {
-        const pawn = new Pawn(Player.WHITE);
-        const square = Square.at(3, 4)
-        board.setPiece(square, pawn)
-        pawn.getAvailableMoves(board).should.eql([{row: 4, col: 4}])
-    })
-
-    it("Test 2: White Pawn can move 1 or 2 squares forward - if it hasn't moved already", () => {
-        const pawn = new Pawn(Player.WHITE);
-        const square = Square.at(1, 1)
-        board.setPiece(square, pawn)
-
-        pawn.getAvailableMoves(board).should.eql([{row: 2, col: 1}, {row: 3, col: 1}])
-    })
-    it("Test 3: Black Pawn (at start)", () => {
-        const pawn = new Pawn(Player.BLACK);
-        const square = Square.at(6, 1)
-        board.setPiece(square, pawn)
-        pawn.getAvailableMoves(board).should.eql([{row: 5, col: 1}, {row: 4, col: 1}])
-    })
-})
 
 describe('white pawns', () => {
     let board;
@@ -55,7 +29,6 @@ describe('black pawns', () => {
         board.setPiece(Square.at(7, 7), pawn);
 
         const moves = pawn.getAvailableMoves(board);
-
         moves.should.deep.include(Square.at(6, 7));
     });
 
@@ -113,6 +86,28 @@ describe('black pawns', () => {
 
         moves.should.have.length(2);
         moves.should.deep.include.members([Square.at(4, 7), Square.at(5, 7)]);
+    });
+
+    it('cannot move if there is a piece in front', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const blockingPiece = new Rook(Player.WHITE);
+        board.setPiece(Square.at(6, 3), pawn);
+        board.setPiece(Square.at(5, 3), blockingPiece);
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.be.empty;
+    });
+
+    it('cannot move two squares if there is a piece two sqaures in front', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const blockingPiece = new Rook(Player.WHITE);
+        board.setPiece(Square.at(6, 3), pawn);
+        board.setPiece(Square.at(4, 3), blockingPiece);
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(4, 3));
     });
 
 });
