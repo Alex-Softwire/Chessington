@@ -12,8 +12,8 @@ export default class Pawn extends Piece {
         let current_col = board.findPiece(this).col
         if (this.player === Player.WHITE) {
             if (board.findPiece(this).row === 1) {
-                return new Array(new Square(current_row+1,current_col),
-                new Square(current_row+2,current_col));
+                return [new Square(current_row+1,current_col),
+                new Square(current_row+2,current_col)];
             }
             else {
                 return new Array(new Square(current_row+1,current_col));
@@ -21,8 +21,8 @@ export default class Pawn extends Piece {
         }
         else if (this.player === Player.BLACK) {
             if (board.findPiece(this).row === 6) {
-                return new Array(new Square(current_row-1,current_col),
-                    new Square(current_row-2,current_col));
+                return [new Square(current_row-1,current_col),
+                    new Square(current_row-2,current_col)];
             }
             else {
                 return new Array(new Square(current_row-1,current_col));

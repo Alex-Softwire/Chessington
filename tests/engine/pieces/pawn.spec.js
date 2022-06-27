@@ -16,13 +16,15 @@ describe('Pawn', () => {
         board.setPiece(square, pawn)
         pawn.getAvailableMoves(board).should.eql([{row: 4, col: 4}])
     })
-    it("Test 1: White Pawn (at start)", () => {
+
+    it("Test 2: White Pawn can move 1 or 2 squares forward - if it hasn't moved already", () => {
         const pawn = new Pawn(Player.WHITE);
         const square = Square.at(1, 1)
         board.setPiece(square, pawn)
+
         pawn.getAvailableMoves(board).should.eql([{row: 2, col: 1}, {row: 3, col: 1}])
     })
-    it("Test 2: Black Pawn (at start)", () => {
+    it("Test 3: Black Pawn (at start)", () => {
         const pawn = new Pawn(Player.BLACK);
         const square = Square.at(6, 1)
         board.setPiece(square, pawn)
