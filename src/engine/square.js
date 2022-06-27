@@ -17,7 +17,7 @@ export default class Square {
         return `Row ${this.row}, Col ${this.col}`;
     }
 
-    isThereAnEmptySpace(board) {
+    isThisAnEmptySpace(board) {
         if (board.getPiece(this) === undefined) {
             return true
         }
@@ -25,9 +25,10 @@ export default class Square {
             return false
         }
     }
-    isThereATakeablePieceOrEmptySpace(board) {
-        if (this.isThereAnEmptySpace(board)) {
-            return true
+
+    containsATakeablePiece(board) {
+        if (this.isThisAnEmptySpace(board)) {
+            return false
         }
         else if ((board.getPiece(this).player !== board.currentPlayer) && (board.getPiece(this).isCapturable === true )) {
             return true
@@ -35,9 +36,8 @@ export default class Square {
         else {
             return false
         }
-
     }
-    isOffBoard(board) {
+    isNotOffBoard(board) {
         if ((this.col >= board.board.length) || (this.row >= board.board.length) || (this.col < 0) || (this.row < 0)) {
             return false
         }
