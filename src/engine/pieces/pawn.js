@@ -17,11 +17,11 @@ export default class Pawn extends Piece {
         }
 
         if (this.hasMoved === false) {
-            availableMoves = [new Square(currentRow+1*whiteBlackMultiplier,currentCol),
+            availableMoves = [new Square(currentRow+whiteBlackMultiplier,currentCol),
                 new Square(currentRow+2*whiteBlackMultiplier,currentCol)];
             }
         else {
-            availableMoves = new Array(new Square(currentRow+1*whiteBlackMultiplier,currentCol));
+            availableMoves = new Array(new Square(currentRow+whiteBlackMultiplier,currentCol));
         }
 
 
@@ -30,7 +30,7 @@ export default class Pawn extends Piece {
             .filter(square => square.isThisAnEmptySpace(board,this.player))
 
         for (let i = -1; i < 2;i = i+2) {
-            const diagonalSquare = new Square(currentRow+1*whiteBlackMultiplier,currentCol+i)
+            const diagonalSquare = new Square(currentRow+whiteBlackMultiplier,currentCol+i)
             if (diagonalSquare.isNotOffBoard(board))
             {
                 if (diagonalSquare.containsATakeablePiece(board,this.player)) {
