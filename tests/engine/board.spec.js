@@ -37,5 +37,7 @@ describe('Board', () => {
             board.findPiece(pawn).should.eql(square); // Object equivalence: different objects, same data
         });
 
+
+
     });
 });

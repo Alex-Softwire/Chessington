@@ -9,6 +9,8 @@ import Bishop from '../../engine/pieces/bishop';
 import Queen from '../../engine/pieces/queen';
 import King from '../../engine/pieces/king';
 
+
+
 let boardUI;
 let board;
 
@@ -56,6 +58,7 @@ function boardToPositionObject() {
 }
 
 function onDragStart(source, piece, position, orientation) {
+    console.log("Tesssst")
     return (board.currentPlayer === Player.WHITE && piece.search(/^w/) !== -1) ||
            (board.currentPlayer === Player.BLACK && piece.search(/^b/) !== -1);
 }
@@ -64,7 +67,7 @@ function onDrop(source, target) {
     const fromSquare = positionStringToSquare(source);
     const toSquare = positionStringToSquare(target);
     const pieceToMove = board.getPiece(fromSquare);
-    
+
     if (!pieceToMove || !pieceToMove.getAvailableMoves(board).some(square => square.equals(toSquare))) {
         return 'snapback';
     }
@@ -79,7 +82,6 @@ function updateStatus() {
 
 function boardInStartingPosition() {
     let board = new Board();
-    
     for (let i = 0; i < GameSettings.BOARD_SIZE; i++) {
         board.setPiece(Square.at(1, i), new Pawn(Player.WHITE));
         board.setPiece(Square.at(6, i), new Pawn(Player.BLACK));
