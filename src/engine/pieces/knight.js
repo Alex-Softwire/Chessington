@@ -7,18 +7,11 @@ export default class Knight extends Piece {
     }
 
     getAvailableMoves(board) {
-        let currentRow = board.findPiece(this).row
-        let currentCol = board.findPiece(this).col
-        let boardSize = board.board.length
-        let Available_Moves = []
-        for (let i = 0; i < boardSize; i++) {
-            for (let j = 0; j < boardSize; j++) {
-               if ((Math.abs(i-currentRow)===1&&Math.abs(j-currentCol)===2)||
-                   ((Math.abs(i-currentRow)===2&&Math.abs(j-currentCol)===1))) {
-                    Available_Moves.push(new Square(i, j))
-                }
-            }
-        }
-        return Available_Moves.filter(square => square.containsATakeablePiece(board,this.player) || square.isThisAnEmptySpace(board))
+        let availableMoves = []
+        let knightMovementDirections = [[-1,2],[1,2],[1,-2],[-1,-2],[2,1],[-2,1],[2,-1],[-2,-1]]
+        knightMovementDirections.forEach(direction =>
+            availableMoves = availableMoves.concat(this.getMovesInDirection(direction[0],direction[1],board).slice(0,1))
+        )
+        return availableMoves
     }
 }

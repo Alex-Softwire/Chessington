@@ -8,37 +8,36 @@ export default class Pawn extends Piece {
     }
 
     getAvailableMoves(board) {
-        let currentRow = board.findPiece(this).row
-        let currentCol = board.findPiece(this).col
-        let whiteBlackMultiplier = +1
-        let availableMoves = []
+        let pawnMovementDirection = +1
         if (this.player === Player.BLACK) {
-            whiteBlackMultiplier = -1
+            pawnMovementDirection = -1
         }
-
-        if (this.hasMoved === false) {
-            availableMoves = [new Square(currentRow+whiteBlackMultiplier,currentCol),
-                new Square(currentRow+2*whiteBlackMultiplier,currentCol)];
-            }
-        else {
-            availableMoves = new Array(new Square(currentRow+whiteBlackMultiplier,currentCol));
-        }
-
-
-        availableMoves = availableMoves.filter(square => square.isNotOffBoard(board))
-            .filter(square => this.areThereNoPiecesInTheWay(board,square,currentRow,currentCol))
-            .filter(square => square.isThisAnEmptySpace(board,this.player))
-
-        for (let i = -1; i < 2;i = i+2) {
-            const diagonalSquare = new Square(currentRow+whiteBlackMultiplier,currentCol+i)
-            if (diagonalSquare.isNotOffBoard(board))
-            {
-                if (diagonalSquare.containsATakeablePiece(board,this.player)) {
-                    availableMoves.push(diagonalSquare)
-                }
-            }
-        }
+        let availableMoves = this.getForwardMoves(pawnMovementDirection,board)
+        availableMoves = availableMoves.concat(this.getDiagonalMoves(pawnMovementDirection,board))
         return availableMoves
     }
 
+    getForwardMoves(pawnMovementDirection,board) {
+        let forwardMoves = []
+        if (this.hasMoved === false) {
+            forwardMoves = this.getMovesInDirection(0,pawnMovementDirection,board).slice(0,2)
+        }
+        else {
+            forwardMoves = this.getMovesInDirection(0,pawnMovementDirection,board).slice(0,1)
+        }
+        return forwardMoves
+    }
+
+    getDiagonalMoves(pawnMovementDirection,board) {
+        let diagonalMoves = []
+        let possibleDiagonalMoves = [[pawnMovementDirection,1],[pawnMovementDirection,-1]]
+        possibleDiagonalMoves.forEach((direction) => {
+            const diagonalSquare =  board.findPiece(this).getSquareInDirection(direction[0],direction[1])
+            if (diagonalSquare.isOnTheBoard(board) && diagonalSquare.isThisATakeablePiece(board,this.player)) {
+                        diagonalMoves.push(diagonalSquare)
+                }
+            }
+        )
+        return diagonalMoves
+    }
 }

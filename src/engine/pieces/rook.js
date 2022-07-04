@@ -6,18 +6,11 @@ export default class Rook extends Piece {
     }
 
     getAvailableMoves(board) {
-        let currentRow = board.findPiece(this).row
-        let currentCol = board.findPiece(this).col
         let availableMoves = []
-        for (let i = 0;i<board.board.length;i++) {
-            if (i !== currentCol) {
-                availableMoves.push(new Square(currentRow,i))
-            }
-            if (i !== currentRow) {
-                availableMoves.push(new Square(i,currentCol))
-            }
-        }
-        return availableMoves.filter(square => this.areThereNoPiecesInTheWay(board,square,currentRow,currentCol))
-            .filter(square => square.containsATakeablePiece(board,this.player) || square.isThisAnEmptySpace(board))
+        let rookMovementDirections = [[-1,0],[0,1],[0,-1],[1,0]]
+        rookMovementDirections.forEach(direction =>
+            availableMoves = availableMoves.concat(this.getMovesInDirection(direction[0],direction[1],board))
+        )
+        return availableMoves
     }
 }

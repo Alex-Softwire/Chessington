@@ -8,18 +8,11 @@ export default class King extends Piece {
     }
 
     getAvailableMoves(board) {
-        let currentRow = board.findPiece(this).row
-        let currentCol = board.findPiece(this).col
-        let boardSize = board.board.length
         let availableMoves = []
-        for (let i = 0; i < boardSize; i++) {
-            for (let j = 0; j < boardSize; j++) {
-                if ((Math.abs(i-currentRow)<=1&&Math.abs(j-currentCol)<=1)&&
-                    ((i !== currentRow) || (j !== currentCol))) {
-                    availableMoves.push(new Square(i, j))
-                }
-            }
-        }
-        return availableMoves.filter(square => square.containsATakeablePiece(board,this.player) || square.isThisAnEmptySpace(board))
+        let kingMovementDirections = [[-1,1],[1,1],[-1,-1],[1,-1],[1,0],[-1,0],[0,-1],[0,1]]
+        kingMovementDirections.forEach(direction =>
+            availableMoves = availableMoves.concat(this.getMovesInDirection(direction[0],direction[1],board).slice(0,1))
+        )
+        return availableMoves
     }
 }

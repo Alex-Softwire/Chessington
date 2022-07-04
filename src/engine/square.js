@@ -18,32 +18,22 @@ export default class Square {
     }
 
     isThisAnEmptySpace(board) {
-        if (board.getPiece(this) === undefined) {
-            return true
-        }
-        else {
-            return false
-        }
+        return board.getPiece(this) === undefined;
     }
 
-    containsATakeablePiece(board) {
-        if (this.isThisAnEmptySpace(board)) {
+    isThisATakeablePiece(board) {
+        if (!(this.isOnTheBoard(board)) || this.isThisAnEmptySpace(board)) {
             return false
         }
-        else if ((board.getPiece(this).player !== board.currentPlayer) && (board.getPiece(this).isCapturable === true )) {
-            return true
-        }
-        else {
-            return false
-        }
+        else return (board.getPiece(this).player !== board.currentPlayer) && (board.getPiece(this).isCapturable === true);
     }
-    isNotOffBoard(board) {
-        if ((this.col >= board.board.length) || (this.row >= board.board.length) || (this.col < 0) || (this.row < 0)) {
-            return false
-        }
-        else {
-            return true
-        }
+
+    isOnTheBoard(board) {
+        return !((this.col >= board.board.length) || (this.row >= board.board.length) || (this.col < 0) || (this.row < 0));
+    }
+
+    getSquareInDirection(rowModifier,colModifier) {
+        return new Square(this.row+rowModifier,this.col+colModifier)
     }
 
 }
